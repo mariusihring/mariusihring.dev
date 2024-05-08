@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package rpc.valorant;
+option go_package = "rpc/valorant";
+
+service ValorantService {
+}

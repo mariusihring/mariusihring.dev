@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package rpc.database;
+option go_package = "rpc/database";
+
+service DatabaseService {
+}
