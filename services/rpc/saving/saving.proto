@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package rpc.savingservice;
+option go_package = "rpc/savingservice";
+
+service SavingService {
+}

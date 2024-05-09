@@ -6,3 +6,15 @@ breaking:
 lint:
   use:
     - DEFAULT
+
+
+#version: v1
+#plugins:
+#  - plugin: buf.build/grpc/plugins/go
+#    out: .
+#    opt:
+#      - paths=source_relative
+#  - plugin: buf.build/grpc/plugins/go-grpc
+#    out: .
+#    opt:
+#      - paths=source_relative

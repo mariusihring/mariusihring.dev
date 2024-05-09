@@ -1,16 +1,16 @@
 gen_all: gen_saving gen_config gen_database gen_user gen_valorant
 
 gen_saving:
-	protoc --go_out=. --twirp_out=. rpc/saving/service.proto
+	cd rpc/saving && buf generate	
 
 gen_config:
-	protoc --go_out=. --twirp_out=. rpc/config/service.proto
+	cd rpc/config && buf generate	
 
 gen_database:
-	protoc --go_out=. --twirp_out=. rpc/database/service.proto
+	cd rpc/database && buf generate	
 
 gen_user:
-	protoc --go_out=. --twirp_out=. rpc/user/service.proto
+	cd rpc/user && buf generate	
 
 gen_valorant:
-	protoc --go_out=. --twirp_out=. rpc/valorant/service.proto
+	cd rpc/valorant && buf generate	
