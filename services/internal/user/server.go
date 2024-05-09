@@ -2,6 +2,12 @@ package userserver
 
 import (
 	"context"
+	"fmt"
+	"go.uber.org/fx"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
+	"net"
+	"os"
 
 	userservice "mariusihring.dev/services/rpc/user"
 )
@@ -19,4 +25,28 @@ func (s *UserServer) GetUser(ctx context.Context, req *userservice.UserRequest) 
 		Created:     "12.12.12",
 		LastSignIn:  "12.12.12",
 	}, nil
+}
+
+func NewUserServiceServer(lc fx.Lifecycle) *grpc.Server {
+	user_service_port := os.Getenv("USER_SERVICE_PORT")
+	port := fmt.Sprintf(":%s", user_service_port)
+	svr := grpc.NewServer()
+	userservice.RegisterUserServiceServer(svr, &UserServer{})
+	reflection.Register(svr)
+	lc.Append(fx.Hook{
+		OnStart: func(ctx context.Context) error {
+			ln, err := net.Listen("tcp", port)
+			if err != nil {
+				return err
+			}
+			fmt.Println("Starting UserService Server at ", port)
+			go svr.Serve(ln)
+			return nil
+		},
+		OnStop: func(ctx context.Context) error {
+			svr.GracefulStop()
+			return nil
+		},
+	})
+	return svr
 }
