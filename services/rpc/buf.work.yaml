@@ -1,7 +1,6 @@
 version: v1
 directories:
-  - saving
   - user
-  - valorant
+  - saving
   - database
-  - config
+  - valorant

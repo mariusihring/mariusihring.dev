@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-package rpc.saving;
-option go_package = "rpc/saving";
-
-service SavingsService {
-}

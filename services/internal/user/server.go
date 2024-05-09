@@ -2,18 +2,21 @@ package userserver
 
 import (
 	"context"
-	pb "mariusihring.dev/services/rpc/user"
+
+	userservice "mariusihring.dev/services/rpc/user"
 )
 
-type UserServer struct{}
+type UserServer struct {
+	userservice.UnimplementedUserServiceServer
+}
 
-func (s *UserServer) GetUser(ctx context.Context, reg *pb.UserRequest) (*pb.UserResponse, error) {
-	return &pb.UserResponse{
-		Uid:         "",
-		DisplayName: "",
-		Phone:       "",
-		Provider:    "",
-		Created:     "",
-		LastSignIn:  "",
+func (s *UserServer) GetUser(ctx context.Context, req *userservice.UserRequest) (*userservice.UserResponse, error) {
+	return &userservice.UserResponse{
+		Uid:         "1",
+		DisplayName: "test",
+		Phone:       "123213",
+		Provider:    "test",
+		Created:     "12.12.12",
+		LastSignIn:  "12.12.12",
 	}, nil
 }
