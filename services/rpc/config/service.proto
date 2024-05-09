@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package rpc.config;
+option go_package = "rpc/config";
+
+service ConfigService {
+}

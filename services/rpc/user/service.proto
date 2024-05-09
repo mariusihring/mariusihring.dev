@@ -4,4 +4,19 @@ package rpc.user;
 option go_package = "rpc/user";
 
 service UserService {
+  rpc GetUser(UserRequest) returns (UserResponse) {};
+}
+
+message UserRequest {
+  int64 id = 1;
+}
+
+message UserResponse {
+  string uid = 1;
+  string display_name = 2;
+  string phone = 3;
+  string provider = 4;
+  string created = 5;
+  string last_sign_in = 6;
+
 }
