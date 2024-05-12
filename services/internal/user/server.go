@@ -8,6 +8,7 @@ import (
 	"google.golang.org/grpc/reflection"
 	"net"
 	"os"
+	"time"
 
 	userservice "mariusihring.dev/services/rpc/user"
 )
@@ -27,6 +28,36 @@ func (s *UserServer) GetUser(ctx context.Context, req *userservice.UserRequest) 
 		CreatedAt:    "2024-04-04",
 		UpdatedAt:    "2024-04-04",
 	}, nil
+}
+
+func (s *UserServer) CreateUser(ctx context.Context, req *userservice.NewUserRequest) (*userservice.UserResponse, error) {
+
+	return &userservice.UserResponse{
+		Id:          1,
+		LastName:     req.LastName,
+		FirstName:    req.FirstName,
+		UserName:     req.UserName,
+		Email:        req.Email,
+		PasswordHash: req.PasswordHash,
+		CreatedAt:    time.Now().String(),
+		UpdatedAt:    time.Now().String(),
+	}, nil
+
+}
+
+func (s *UserServer) UpdateUser(ctx context.Context, req *userservice.NewUserRequest) (*userservice.UserResponse, error) {
+
+	return &userservice.UserResponse{
+		Id:          1,
+		LastName:     req.LastName,
+		FirstName:    req.FirstName,
+		UserName:     req.UserName,
+		Email:        req.Email,
+		PasswordHash: req.PasswordHash,
+		CreatedAt:    "2024-04-04",
+		UpdatedAt:    time.Now().String(),
+	}, nil
+
 }
 
 func NewUserServiceServer(lc fx.Lifecycle) *grpc.Server {

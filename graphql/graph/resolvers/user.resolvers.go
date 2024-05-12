@@ -6,7 +6,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 	userpb "mariusihring.dev/services/rpc/user"
 	"strconv"
 
@@ -15,12 +14,64 @@ import (
 
 // CreateUser is the resolver for the createUser field.
 func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: CreateUser - createUser"))
+	var last_name string
+	if input.LastName != nil {
+		last_name = *input.LastName
+	} else {
+		last_name = ""
+	}
+	var first_name string
+	if input.FirstName != nil {
+		first_name = *input.FirstName
+	} else {
+		first_name = ""
+	}
+	resp, err := r.UserService.Client.CreateUser(ctx, &userpb.NewUserRequest{
+		LastName:     last_name,
+		FirstName:    first_name,
+		UserName:     input.UserName,
+		Email:        input.Email,
+		PasswordHash: input.PasswordHash,
+	})
+	if err != nil {
+		return nil, err
+	}
+	user_id := strconv.FormatInt(resp.Id, 10)
+
+	return &model.User{
+		ID:        user_id,
+		LastName:  &resp.LastName,
+		FirstName: &resp.FirstName,
+		UserName:  resp.UserName,
+		Email:     resp.Email,
+		AddedAt:   resp.CreatedAt,
+		UpdatedAt: resp.UpdatedAt,
+	}, nil
 }
 
 // UpdateUser is the resolver for the updateUser field.
 func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUser) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: UpdateUser - updateUser"))
+	resp, err := r.UserService.Client.UpdateUser(ctx, &userpb.NewUserRequest{
+		LastName:     *input.LastName,
+		FirstName:    *input.FirstName,
+		UserName:     *input.UserName,
+		Email:        *input.Email,
+		PasswordHash: *input.PasswordHash,
+	})
+	if err != nil {
+		return nil, err
+	}
+	user_id := strconv.FormatInt(resp.Id, 10)
+
+	return &model.User{
+		ID:        user_id,
+		LastName:  &resp.LastName,
+		FirstName: &resp.FirstName,
+		UserName:  resp.UserName,
+		Email:     resp.Email,
+		AddedAt:   resp.CreatedAt,
+		UpdatedAt: resp.UpdatedAt,
+	}, nil
 }
 
 // Me is the resolver for the me field.
@@ -35,14 +86,13 @@ func (r *queryResolver) Me(ctx context.Context, id string) (*model.User, error) 
 	if err != nil {
 		return nil, err
 	}
-
 	return &model.User{
 		ID:        id,
 		LastName:  &resp.LastName,
 		FirstName: &resp.FirstName,
 		UserName:  resp.UserName,
 		Email:     resp.Email,
-		AddedAt:   resp.UpdatedAt,
+		AddedAt:   resp.CreatedAt,
 		UpdatedAt: resp.UpdatedAt,
 	}, nil
 }

@@ -12,7 +12,7 @@ exec:
 #   filename: graph/federation.go
 #   package: graph
 
-# Where should any generated models go?
+# Where should any generated databasemodels go?
 model:
   filename: graph/model/models_gen.go
   package: model
@@ -26,7 +26,7 @@ resolver:
   # Optional: turn on to not generate template comments above resolvers
   # omit_template_comment: false
 
-# Optional: turn on use ` + "`" + `gqlgen:"fieldName"` + "`" + ` tags in your models
+# Optional: turn on use ` + "`" + `gqlgen:"fieldName"` + "`" + ` tags in your databasemodels
 # struct_tag: json
 
 # Optional: turn on to use []Thing instead of []*Thing
