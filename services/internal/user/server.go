@@ -18,12 +18,14 @@ type UserServer struct {
 
 func (s *UserServer) GetUser(ctx context.Context, req *userservice.UserRequest) (*userservice.UserResponse, error) {
 	return &userservice.UserResponse{
-		Uid:         "1",
-		DisplayName: "test",
-		Phone:       "123213",
-		Provider:    "test",
-		Created:     "12.12.12",
-		LastSignIn:  "12.12.12",
+		Id:          1,
+		LastName:     "ihring",
+		FirstName:    "marius",
+		UserName:     "marius_ihring",
+		Email:        "marius.ihring@icloud.com",
+		PasswordHash: "akjsdhakj",
+		CreatedAt:    "2024-04-04",
+		UpdatedAt:    "2024-04-04",
 	}, nil
 }
 

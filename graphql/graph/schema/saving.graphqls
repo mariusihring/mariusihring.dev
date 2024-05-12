@@ -1,0 +1,28 @@
+type Goal{
+    id: ID!
+    user: User!
+    name: String!
+    amount: Float!
+    description: String
+    link: String
+    image: String
+    added_at: String!
+    updated_at: String!
+}
+
+input NewGoal {
+    name: String!
+    amount: Float!
+    description: String
+    link: String
+    image: String
+}
+
+extend type Query {
+    getGoal(id: ID!): Goal!
+
+}
+
+extend type Mutation {
+    createGoal(input: NewGoal!): Goal!
+}

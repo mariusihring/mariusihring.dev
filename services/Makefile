@@ -1,4 +1,4 @@
-gen_all: gen_saving gen_config gen_database gen_user gen_valorant
+gen_all_rpc: gen_saving gen_config gen_database gen_user gen_valorant
 
 gen_saving:
 	cd rpc/saving && buf generate	
