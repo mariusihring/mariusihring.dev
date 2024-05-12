@@ -13,6 +13,7 @@ type Goal struct {
 	Link *string
 	Image *string
 	Entries []Entry
+	UserId uint
 }
 
 

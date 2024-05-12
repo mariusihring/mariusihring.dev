@@ -51,6 +51,8 @@ func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) 
 
 // UpdateUser is the resolver for the updateUser field.
 func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUser) (*model.User, error) {
+
+	//TODO: fix when input is nil
 	resp, err := r.UserService.Client.UpdateUser(ctx, &userpb.NewUserRequest{
 		LastName:     *input.LastName,
 		FirstName:    *input.FirstName,
@@ -61,10 +63,10 @@ func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUse
 	if err != nil {
 		return nil, err
 	}
-	user_id := strconv.FormatInt(resp.Id, 10)
+
 
 	return &model.User{
-		ID:        user_id,
+		ID:        string(resp.Id),
 		LastName:  &resp.LastName,
 		FirstName: &resp.FirstName,
 		UserName:  resp.UserName,

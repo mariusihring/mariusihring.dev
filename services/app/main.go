@@ -5,6 +5,7 @@ import (
 	"go.uber.org/fx"
 	"google.golang.org/grpc"
 	"log"
+	"mariusihring.dev/services/db"
 	userserver "mariusihring.dev/services/internal/user"
 )
 
@@ -14,7 +15,10 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 	fx.New(
-		fx.Provide(userserver.NewUserServiceServer),
+		fx.Provide(
+			db.NewDbConnection,
+			userserver.NewUserServiceServer,
+			),
 		fx.Invoke(func(*grpc.Server) {}),
 	).Run()
 }
