@@ -2,4 +2,4 @@
 .idea
 .env
 */.env
-services/.env
+.env

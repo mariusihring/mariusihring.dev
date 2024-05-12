@@ -21,6 +21,7 @@ type UserServer struct {
 }
 
 func (s *UserServer) GetUser(ctx context.Context, req *userservice.UserRequest) (*userservice.UserResponse, error) {
+	print(req.Id)
 	user := databasemodels.User{Id: uint(req.Id)}
 	result := s.DB.First(&user)
 	if result.Error != nil {
@@ -94,17 +95,16 @@ func (s *UserServer) UpdateUser(ctx context.Context, req *userservice.NewUserReq
 
 func NewUserServiceServer(lc fx.Lifecycle, db *gorm.DB) *grpc.Server {
 	user_service_port := os.Getenv("USER_SERVICE_PORT")
-	port := fmt.Sprintf(":%s", user_service_port)
 	svr := grpc.NewServer()
 	userservice.RegisterUserServiceServer(svr, &UserServer{DB: db})
 	reflection.Register(svr)
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
-			ln, err := net.Listen("tcp", port)
+			ln, err := net.Listen("tcp", user_service_port)
 			if err != nil {
 				return err
 			}
-			fmt.Println("Starting UserService Server at ", port)
+			fmt.Println("Starting UserService Server at ", user_service_port)
 			go svr.Serve(ln)
 			return nil
 		},
